@@ -2,23 +2,24 @@
 // Import 
 import Image from 'next/image'
 import React, {useState} from 'react'
-import Login_Page from '../../public/Login_Page.jpg'
+import Login_Page from '../../../public/Login_Page.jpg'
 import Link from 'next/link'
 import {useRouter} from "next/navigation";
 import toast, { Toaster } from 'react-hot-toast';
+import axios from 'axios'
 
 export default function LoginPage() {
      
      const router = useRouter();
      const [user, setUser] = useState({
-         email: '',   // Provide an initial value
+        identifier: '',   // Provide an initial value
         password: '', // Provide an initial value
       });
    
    
     const [showPassword, setShowPassword] = useState(false);
     // To show or hide password  
-    const pressShow = (e:any) => {
+    const pressShow = (e) => {
       e.preventDefault();
       setShowPassword(!showPassword)
     }
@@ -26,7 +27,7 @@ export default function LoginPage() {
    // To handle password validation on real time 
   const [password,setPassword] = useState('')
   const [errorP, setErrorP] = useState('');
-  const handlePasswordChange = (e:any) => {
+  const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
     setPassword(newPassword);
     if(newPassword.length>0 && newPassword.length<8){
@@ -39,7 +40,7 @@ export default function LoginPage() {
   // To handle Email validation on real time 
   const [email,setEmail] = useState('')
   const [errorE,setErrorE] = useState('')
-  const handleEmailChange = (e:any) =>{
+  const handleEmailChange = (e) =>{
   const newEmail = e.target.value;
   setEmail(newEmail);
   if(newEmail.includes("@gmail.com")||newEmail.includes("@yahoo.com")||newEmail.includes("@hotmail.com")||newEmail.includes("@outlook.com")){
@@ -50,32 +51,51 @@ export default function LoginPage() {
     }
   }
 
+  const [Username,setUsername] = useState('')
+  const [errorU,setErrorU] = useState('')
+  const handleUsernameChange = (e) =>{
+  const newUsername = e.target.value;
+  setUsername(newUsername);
+  if(newUsername.length>2 && newUsername.length<12){
+    setErrorU('');
+    }
+    else{
+      if(newUsername.length>12){
+      setErrorU('Username is too long!');
+    }
+    else if(newUsername.length<3){
+      setErrorU('Username is too short!');
+    }
+    }
+  }
+
   // Allow to redirect 
-  const handle = (e:any) =>{
+  const handle = (e) =>{
    e.preventDefault();
       return;
   }
   
 //  To handle login through api
-const onLogin = async (e:any) => {
+const onLogin = async (e) => {
    
   
-          const response = await fetch("/api/Login",
-          {  
-            method:"POST",
-            body:JSON.stringify({
-              email:user.email,
-              password:user.password
-            })
-          })
+          const response = await axios.post("http://localhost:1337/api/auth/local",user)
+          // {  
+          //   method:"POST",
+          //   body:JSON.stringify({
+          //     email:user.email,
+          //     password:user.password
+          //   })
+          // })
           console.log(response);
           
               // check response ok
-              if (response.ok) {
+              if (response.status==200) {
                 // login successful, redirect to the application page
                 e.preventDefault();
-                const destination = `/Application?email=${user.email}`;
-                 router.push(destination)
+                // const destination = `/Application/?email=${user.email}`;
+                const destination = `/?username=${user.identifier}`
+                router.push(destination)
                 toast.success('Login successful')
                 console.log(response);
                } else {      
@@ -91,8 +111,8 @@ return(
     <Image src={Login_Page} alt='Login' fill/>
       <form action='' onSubmit={handle}  className="flex flex-col gap-4 absolute text-l w-64 h-50 bottom-40 left-1/2 -translate-x-1/2 -translate-y-1/2 font-italic">   
         <div  className="relative">
-        <input required onChangeCapture={handleEmailChange} value={user?.email}  onChange={(e) =>setUser({ ...user, [e.target.name]: e.target.value})} className="p-2 text-black text-opacity-50 focus:text-black  w-full h-12 rounded-lg" placeholder='Email' name='email' type='text'/>
-        {errorE && <div className="text-xs text-black">{errorE}</div>}
+        <input required onChangeCapture={handleUsernameChange} value={user?.identifier}  onChange={(e) =>setUser({ ...user, [e.target.name]: e.target.value})} className="p-2 text-black text-opacity-50 focus:text-black  w-full h-12 rounded-lg" placeholder='Username' name='identifier' type='text'/>
+        {errorU && <div className="text-xs text-black">{errorU}</div>}
         </div>
         <div className="relative">
         <input required value={user?.password} onChangeCapture={handlePasswordChange} onChange={(e) =>setUser({ ...user, [e.target.name]: e.target.value})} className="p-2 text-black text-opacity-50 focus:text-black  w-full h-12 rounded-lg" placeholder="Password" name='password' type={showPassword? "text":'password'}/>

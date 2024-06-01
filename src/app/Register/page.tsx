@@ -6,20 +6,22 @@ import Login_Page from '../../../public/Login_Page.jpg'
 import Link from 'next/link'
 import {useRouter} from "next/navigation";
 import toast, { Toaster } from 'react-hot-toast';
-
+import axios from 'axios'
+// import { connect } from 'http2'
 
 export default function SignupPage() {
 
      const router = useRouter();
     // Define a component state to store user data
      const [user, setUser] = useState({
-         email: '',   
-        password: '', 
+        username:'', 
+        email: '',   
+        password: ''
       });
 
 // To show or hide password 
     const [showPassword, setShowPassword] = useState(false);
-    const pressShow = (e:any) => {
+    const pressShow = (e) => {
       e.preventDefault();
       setShowPassword(!showPassword)
     }
@@ -27,7 +29,7 @@ export default function SignupPage() {
   // To handle password validation on real time
   const [password,setPassword] = useState('')
   const [errorP, setErrorP] = useState('');
-  const handlePasswordChange = (e:any) => {
+  const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
     setPassword(newPassword);
     if(newPassword.length>0 && newPassword.length<8){
@@ -41,7 +43,7 @@ export default function SignupPage() {
   // To handle Email validation on real time 
   const [email,setEmail] = useState('')
   const [errorE,setErrorE] = useState('')
-  const handleEmailChange = (e:any) =>{
+  const handleEmailChange = (e) =>{
   const newEmail = e.target.value;
   setEmail(newEmail);
   if(newEmail.includes("@gmail.com")||newEmail.includes("@yahoo.com")||newEmail.includes("@hotmail.com")||newEmail.includes("@outlook.com")){
@@ -52,32 +54,45 @@ export default function SignupPage() {
     }
   }
 
+  const [Username,setUsername] = useState('')
+  const [errorU,setErrorU] = useState('')
+  const handleUsernameChange = (e) =>{
+  const newUsername = e.target.value;
+  setUsername(newUsername);
+  if(newUsername.length>2 && newUsername.length<12){
+    setErrorU('');
+    }
+    else{
+      if(newUsername.length>12){
+      setErrorU('Username is too long!');
+    }
+    else if(newUsername.length<3){
+      setErrorU('Username is too short!');
+    }
+    }
+  }
+
+  
 // Allow to redirect 
 // Define a function to prevent a default form submission action
-  const handle = (e:any) =>{
+  const handle = (e) =>{
     e.preventDefault();
     return;
   }
 
 //  To handle Register through api  
-const onSignup = async (e:any) => {
-   
-         const response = await fetch("/api/Register",
-         {  
-           method:"POST",
-           body:JSON.stringify({
-             email:user.email,
-             password:user.password
-             
-           })
-         })
-          
+const onSignup = async (e) => {
+  
+         const response = await axios.post("http://localhost:1337/api/auth/local/register",user
+        
+         )
+         
           console.log(response);
               // check  response
-              if (response.ok) {
+              if (response.status==200) {
                 // login successful, redirect to the application page
                 e.preventDefault();
-                router.push("../");
+                router.push("/Login");
                 toast.success('Registration Successful');
                 console.log(response);
                } else {
@@ -92,6 +107,10 @@ return(
       <Image src={Login_Page} alt='Login' fill/>
         <form action='' onSubmit={handle} className="flex flex-col gap-4 absolute text-l w-64 h-50 bottom-40 left-1/2 -translate-x-1/2 -translate-y-1/2 font-italic">
             
+          <div  className="relative">
+          <input required onChangeCapture={handleUsernameChange} value={user?.username}  onChange={(e) =>setUser({ ...user, [e.target.name]: e.target.value})} className="p-2 text-black text-opacity-50 focus:text-black  w-full h-12 rounded-lg" placeholder='Username' name='username' type='text'/>
+          {errorU && <div className="text-xs text-black">{errorU}</div>}
+          </div>  
           <div  className="relative">
           <input required onChangeCapture={handleEmailChange} value={user?.email}  onChange={(e) =>setUser({ ...user, [e.target.name]: e.target.value})} className="p-2 text-black text-opacity-50 focus:text-black  w-full h-12 rounded-lg" placeholder='Email' name='email' type='text'/>
           {errorE && <div className="text-xs text-black">{errorE}</div>}
@@ -123,7 +142,7 @@ return(
               <h3 className="text-xl text-white  font-bold">Welcome! To E-Shop with Jamstack. </h3>
               <p className="mt-2 text-sm text-gray-300">This is the Register Page.</p>
               <p className="absolute text-l text-black bottom-8 right-2 -translate-x-1/2 -translate-y-1/2 font-italic" >Back to E-Shop</p>
-              <Link href="/"><button type='submit' className="absolute shrink-0 w-32 bottom-0 -right-1 -translate-x-1/2 -translate-y-1 bg-indigo-600 hover:bg-indigo-700 text-slate-800 font-bold py-2 px-4 rounded-full">
+              <Link href="/Login"><button type='submit' className="absolute shrink-0 w-32 bottom-0 -right-1 -translate-x-1/2 -translate-y-1 bg-indigo-600 hover:bg-indigo-700 text-slate-800 font-bold py-2 px-4 rounded-full">
                Login
               </button>
               </Link>

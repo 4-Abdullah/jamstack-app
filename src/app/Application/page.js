@@ -6,46 +6,41 @@ import  {useState} from 'react'
 import axios from "axios"
 import {useParams, usePathname, useRouter, useSearchParams} from "next/navigation";
 import toast from 'react-hot-toast';
-import { Query } from 'pg'
 import { SearchParamsContext } from 'next/dist/shared/lib/hooks-client-context.shared-runtime'
 import { getURL } from 'next/dist/shared/lib/utils'
 import Link from 'next/link'
-import { clear } from 'console'
 
 
-export default function Application({param}: any) {
+export default function Application() {
 
     const router = useRouter()
     const searchParams = useSearchParams()
-   // const oldemail= searchParams.get('email')
-   // const newid=1;
-    // const route = useRouter();
-  
-    // const name = useAuth().userId ?? "" ;
-    //const id = ;
-  // const {
-  //   //  @ts-ignore
-  //   query: { id },
-  // } = router
-  //  const [data, setData] = useState("")
-    // To Logout 
+   
+  // To Logout 
     const logout = async () => {
         try {
-            await axios.get('/api/Logout')
-             toast.success('Logout successful')
+            // await axios.get('/api/Logout')
+            //  toast.success('Logout successful')
             router.push('../')
-        } catch (error:any) {
+        } catch (error) {
             console.log(error.message);
             toast.error(error.message)
         }
     }
 
-    // Get user Details
-  //   const getUserDetails = async () => {
-  //     const res = await axios.get('/api/me')
-  //     console.log(res.data);
-  //     setData(res.data.data.id)
-  // }
+    const Back = async () => {
+      try {
+          // await axios.get('/api/Logout')
+          //  toast.success('Logout successful')
+          const destination=`/?username=${searchParams.get('username')}`
+          router.push(destination)
+      } catch (error) {
+          console.log(error.message);
+          toast.error(error.message)
+      }
+  }
+
+  
 
   const [user, setUser] = useState({
     
@@ -57,7 +52,7 @@ export default function Application({param}: any) {
 
 // To show or hide password 
   const [showPassword, setShowPassword] = useState(false)
-  const pressShow = (e:any) => {
+  const pressShow = (e) => {
     e.preventDefault();
     setShowPassword(!showPassword)
   }
@@ -65,7 +60,7 @@ export default function Application({param}: any) {
 // To handle Password validation on real time
 const [Password,setPassword] = useState('')
 const [errorP, setErrorP] = useState('');
-const handlePasswordChange = (e:any) => {
+const handlePasswordChange = (e) => {
   const newPassword = e.target.value;
   setPassword(newPassword);
   if(newPassword.length>0 && newPassword.length<8){
@@ -79,7 +74,7 @@ const handlePasswordChange = (e:any) => {
 // To handle Email validation on real time
 const [Email,setEmail] = useState('')
 const [errorE,setErrorE] = useState('')
-const handleEmailChange = (e:any) =>{
+const handleEmailChange = (e) =>{
 const newEmail = e.target.value;
 setEmail(newEmail);
 if(newEmail.includes("@gmail.com")||newEmail.includes("@yahoo.com")||newEmail.includes("@hotmail.com")||newEmail.includes("@outlook.com")){
@@ -93,7 +88,7 @@ if(newEmail.includes("@gmail.com")||newEmail.includes("@yahoo.com")||newEmail.in
 // To handle Username validation on real time 
  const [Username, setUsername] = useState('');
   const [errorU, setErrorU] = useState('');
-  const handleUsernameChange = (e:any) => {
+  const handleUsernameChange = (e) => {
     const newUsername = e.target.value;
     setUsername(newUsername);
 
@@ -108,7 +103,7 @@ if(newEmail.includes("@gmail.com")||newEmail.includes("@yahoo.com")||newEmail.in
 // To handle Mobilenumber validation on real time
 const [Mobilenumber,setMobilenumber] = useState('')
 const [errorM,setErrorM] = useState('')
-const handleMobileNumberChange = (e:any) => {
+const handleMobileNumberChange = (e) => {
     const newMobilenumber = e.target.value;
     setMobilenumber(newMobilenumber)
 
@@ -119,17 +114,6 @@ const handleMobileNumberChange = (e:any) => {
         setErrorM('')
     }
       
-    // document.querySelectorAll('input[type="number"]').forEach(input => {
-    // // @ts-ignore 
-    //   input.oninput = () =>{
-    //     // @ts-ignore 
-    //      if(input.value.length>11)
-    //        {
-    //         // @ts-ignore 
-    //         input.value= input.value.slice(0,11);
-    //       }
-    //     }
-    // });
 }
 
 
@@ -200,21 +184,11 @@ const handleSubmitMobilenumber = async () => {
         })
       })
           console.log(response);
-          // if(response.ok){
-          //   console.log("abc")
-          // }
+          
     }    
 
-//   handle form submit
-// const [Inputvalue,setInputvalue] = useState('')  
 
-// const handleE = (e:any) =>{
-//   e.preventDefault();
-//  setInputvalue(user?.email);
-//   return;
-// }
-
-const handle = (e:any) =>{
+const handle = (e) =>{
   e.preventDefault();
       return;
     }
@@ -228,7 +202,7 @@ return (
            <div>
           <h1>User Profile</h1>
           <p className="text-4xl">User Account: 
-            <span className=" p-2 ml-2 rounded bg-orange-500 text-black">{(searchParams.get('email')) }</span>
+            <span className=" p-2 ml-2 rounded bg-orange-500 text-black">{(searchParams.get('username')) }</span>
             </p>
         </div>
       </div>
@@ -236,7 +210,9 @@ return (
         <button type='submit' onClick={logout} className="bg-blue-500 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
           Logout
         </button>
-        
+        <button type='submit' onClick={Back} className="bg-blue-500 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Back to Home
+        </button>
       </div>
       <div className="absolute  top-32 left-5"><p className="text-xl font-bold italic">Personal Information</p></div>
        <form action='' onSubmit={handle}  className="flex gap-8 absolute text-l w-58  h-50 top-60 left-5 font-italic">
