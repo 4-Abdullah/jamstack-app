@@ -4,7 +4,7 @@ import { Button, Card } from "react-bootstrap"
 import increaseCartQuantity from './data'
 
 
-export default async(id)=>{
+const  Productdetails =async(id)=>{
   
   const quantity = 0
 
@@ -134,3 +134,4 @@ export default async(id)=>{
     
   )
 }
+export default Productdetails

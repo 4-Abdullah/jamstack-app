@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import { useSearchParams,useRouter } from 'next/navigation'
 
-export default function ({attributes}) {
+const Product =({attributes})=> {
   const router = useRouter()
 const searchparams=useSearchParams();
 const user=searchparams.get('username')
@@ -37,3 +37,4 @@ const Buynow =()=>{
         </div>
     </>)
 }
+export default Product

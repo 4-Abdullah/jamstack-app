@@ -1,10 +1,11 @@
 import axios from "axios";
 import Productdetails from "./productdetails";
-export default async function data({
+
+const data=async({
   slug,user
 }: {
   slug: string | undefined;user: string | undefined 
-}) {
+})=> {
 const increaseCartQuantity=async(e)=>{
     const data1 = await axios.get(`http://127.0.0.1:1337/api/carts?populate=*&filters[$and][0][user][username][$eq]=${user}`);
     console.log(data1)
@@ -35,3 +36,4 @@ const data = await fetch('http://127.0.0.1:1337/api/products?filters[slug]='+slu
          </div>
   )
 }
+export default data
