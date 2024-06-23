@@ -2,7 +2,7 @@ import { Button, Stack } from "react-bootstrap"
 import { formatCurrency } from "../../utilities/index"
 import { CldImage } from "next-cloudinary";
 
-export default (id)=>{
+const CartItem=(id)=>{
  
     const quantity=2
   return (
@@ -32,3 +32,4 @@ export default (id)=>{
     </Stack>
   )
 }
+export default CartItem

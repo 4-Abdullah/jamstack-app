@@ -3,7 +3,7 @@
 import { useSearchParams } from 'next/navigation'
 import Data from './data';
 
-export default function param(){
+const Param=()=>{
     const searchparams=useSearchParams();
 const slug =searchparams.get('slug')
 const user =searchparams.get('username')
@@ -13,3 +13,4 @@ return(<>
         </>
 )
 }
+export default Param
