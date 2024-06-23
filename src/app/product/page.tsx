@@ -1,20 +1,27 @@
+import { useRouter } from 'next/router';
+import React, { Suspense } from 'react';
+import Param from './Param'; // Adjust the path as needed
 
-// import axios from 'axios'
-import Productdetails from './productdetails'
-import Data from './data'
-import Param from './param'
-import { Suspense } from 'react'
-const Slug =async ({searchparams,}:{searchparams:{slug:string|undefined;username:string|undefined}}) => {
- 
-  console.log(searchparams)
- 
-  return(
-        <>
-        <Suspense>
-        <Param />
-        </Suspense>
-        
-</>
-    )
+interface SlugProps {
+  searchparams: {
+    slug?: string;
+    username?: string;
+  };
 }
-export default Slug
+
+const Slug: React.FC<SlugProps> = () => {
+  const router = useRouter();
+  const { slug, username } = router.query;
+
+  console.log({ slug, username });
+
+  return (
+    <>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Param />
+      </Suspense>
+    </>
+  );
+};
+
+export default Slug;
