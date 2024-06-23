@@ -6,7 +6,7 @@ import { useState } from 'react'
 import {useRouter} from 'next/navigation'
 import Data from '../ShoppingCart/index'
 
-const Head=()=>{
+const Navbar=()=>{
 
   const searchparams=useSearchParams();
 
@@ -18,15 +18,10 @@ console.log(slug)
     const [buttonText, setButtonText] = useState('');
     const router = useRouter()
 
-  useEffect(() => {
-    if(user!=null){
-      setButtonText(user);
-     
-  }
-  else{
-    setButtonText('Login') 
-  }
-  });
+    useEffect(() => {
+      setButtonText(user ? 'Logout' : 'Login');
+    }, [user]);
+
 
   const Home =(e)=>{
     
@@ -121,4 +116,4 @@ console.log(slug)
       
   )
 }
-export default Head
+export default Navbar

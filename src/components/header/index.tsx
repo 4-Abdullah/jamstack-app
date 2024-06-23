@@ -1,6 +1,6 @@
 
 import { Suspense } from 'react';
-import Head from './index2'
+import Navbar from './index2'
 const Header =async ({searchparams,}:{searchparams:{slug:string|undefined ; username:string|undefined}}) => {
   
   console.log(searchparams)
@@ -8,7 +8,7 @@ const Header =async ({searchparams,}:{searchparams:{slug:string|undefined ; user
   return(
         <>
         <Suspense>
-        <Head/>
+        <Navbar/>
         </Suspense>
 </>
     )
