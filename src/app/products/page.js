@@ -4,7 +4,8 @@ import React, { cache } from 'react'
 import Product from './product'
 
 const  HomePage = async() => {
-  const data = await fetch(`${env.NEXT_PUBLIC_STRAPI_API_URL}/api/products?populate=*`,{cache:'no-store'});
+  const apiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL;
+  const data = await fetch(`${apiUrl}/api/products?populate=*`,{cache:'no-store'});
   console.log(data.data)
   const products = await data.json()
   console.log(products)
