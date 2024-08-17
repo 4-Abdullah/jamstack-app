@@ -3,8 +3,6 @@ import Productdetails from "./productdetails";
 
 const data=async({
   slug,user
-}: {
-  slug: string | undefined;user: string | undefined 
 })=> {
 // const increaseCartQuantity=async(e)=>{
 //     const data1 = await axios.get(`http://127.0.0.1:1337/api/carts?populate=*&filters[$and][0][user][username][$eq]=${user}`);
@@ -30,8 +28,8 @@ const data = await fetch(`${apiUrl}/api/products?filters[slug]=`+slug+'&populate
            <div>
            <section className="text-gray-600 body-font overflow-hidden">
              <div className="container px-5 py-24 mx-auto">
-               {products.data.map((p: { id: any} ) => <Productdetails key={p.id} {...p} />)}
-     
+               {products.data.map(p => <Productdetails key={p.id} {...p} />)}
+            
              </div>
            </section>
          </div>
