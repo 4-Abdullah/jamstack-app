@@ -21,7 +21,8 @@ const data=async({
 //     })
     
 //   }
-const data = await fetch('http://127.0.0.1:1337/api/products?filters[slug]='+slug+'&populate=*');
+const apiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL
+const data = await fetch(`${apiUrl}/api/products?filters[slug]=`+slug+'&populate=*');
   console.log(data)
   const products = await data.json()
   console.log(products)
