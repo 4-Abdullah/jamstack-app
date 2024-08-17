@@ -5,18 +5,11 @@ export default async function data({
 }: {
   slug: string | undefined;user:string|undefined
 }) {
-  if (slug==undefined||user==undefined){
-    return(
-    <div>Empty!</div>
-      )
-
-
-}
-else{
+  
   // const data = await fetch(`http://127.0.0.1:1337/api/products?filters[slug]=${slug}`,{ cache: 'no-store' });
 console.log(user,slug)
   const data = await fetch(`http://127.0.0.1:1337/api/carts?populate=*&filters[$and][0][user][username][$eq]=${user}`);
-    console.log(data?.data)
+    console.log(data)
     const products = await data.json()
     console.log(products)
     return(
@@ -24,12 +17,11 @@ console.log(user,slug)
              <div>
              <section className="text-gray-600 body-font overflow-hidden">
                <div className="container px-5 py-24 mx-auto">
-                 {products.data.map((p: { id: any} ) => <Cartitem key={p.id} {...p} />)}
+                 {products.data.map((p: { id:any} ) => <Cartitem key={p.id} {...p} />)}
        
                  {/* {products:products} */}
                </div>
              </section>
            </div>
     )
-}
 }
