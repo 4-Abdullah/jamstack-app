@@ -28,7 +28,7 @@ const Buynow =()=>{
     return (<>
       <div key={attributes.slug} className="xl:w-1/4 md:w-1/2 p-4">
         <div className="bg-gray-100 p-6 rounded-lg">
-        <CldImage src={attributes.image.data.attributes.url} alt='image' width={500} height={400}/>
+        <CldImage  src={attributes.image.data.attributes.url} alt='image' width={500} height={400}/>
           <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">{attributes.category}</h3>
           <h2 className="text-lg text-gray-900 font-medium title-font mb-4">{attributes.title}</h2>
           <p className="leading-relaxed text-base"> {attributes.description}</p>

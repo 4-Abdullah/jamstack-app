@@ -29,8 +29,9 @@ const RootLayout=({children}: {
 
             <Suspense>
             {children}
-            </Suspense>
             <BootstrapClient/>
+            </Suspense>
+            
             <Footer />
         </body>
     </html>

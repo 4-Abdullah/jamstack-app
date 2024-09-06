@@ -5,18 +5,18 @@ import Product from './product'
 
 const  HomePage = async() => {
   const apiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL;
-  const data = await fetch(`${apiUrl}/api/products?populate=*`,{cache:'no-store'});
+  const data = await fetch(`${apiUrl}/api/products?populate=*`,{ cache: 'force-cache' });
   console.log(data)
   const products = await data.json()
   console.log(products)
  
-  if (!data) return <div>Loading...</div>;
+  // if (!data) return <div>Loading...</div>;
 
   return (
 
           <div className='container mx-auto px-4'>
       <section className="text-gray-600 body-font">
-  <div className="container px-5 md:py-24 mx-auto">
+  {/* <div className="container px-5 md:py-24 mx-auto"> */}
     <div className="flex flex-wrap w-full md:mb-20">
       <div className="lg:w-1/2 w-full mb-6 lg:mb-0">
         <h1 className="text-2xl font-medium title-font mb-2 text-gray-500">Product List</h1>
@@ -28,7 +28,7 @@ const  HomePage = async() => {
        <Product key={p.id} {...p}/>)}
   
     </div>
-    </div>
+    {/* </div> */}
 </section>
     </div>
   );

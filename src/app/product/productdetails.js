@@ -4,7 +4,7 @@ import { Button, Card } from "react-bootstrap"
 import increaseCartQuantity from './data'
 
 
-const  Productdetails =async(id)=>{
+const  Productdetails =async({attributes})=>{
   
   const quantity = 0
 
@@ -13,11 +13,11 @@ const  Productdetails =async(id)=>{
   return (<>
     <div className="lg:w-4/5 mx-auto flex flex-wrap">
           <div className="flex justify-center items-center w-full lg:w-auto">
-          <CldImage className="rounded m-auto mb-8" alt="imagew"  src={id.attributes.image.data.attributes.url} width={500} height={400}/>
+          <CldImage className="rounded m-auto mb-8" alt="imagew"  src={attributes.image.data.attributes.url} width={500} height={400}/>
           </div>
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
             <h2 className="text-sm title-font text-gray-500 tracking-widest">MyShop</h2>
-            <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">{id.attributes.title}</h1>
+            <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">{attributes.title}</h1>
             <div className="flex mb-4">
               <span className="flex items-center">
                 <svg fill="currentColor" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4 text-indigo-500" viewBox="0 0 24 24">
@@ -55,7 +55,7 @@ const  Productdetails =async(id)=>{
                 </a>
               </span>
             </div>
-            <p className="leading-relaxed">{id.attributes.description}</p>
+            <p className="leading-relaxed">{attributes.description}</p>
             <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
               <div className="flex">
                 <span className="mr-3">Color</span>
@@ -83,7 +83,7 @@ const  Productdetails =async(id)=>{
         
 
 <div className="d-flex flex-column">
-           <div className="mt-auto">
+           {/* <div className="mt-auto">
            {quantity === 0 ? (
              <Button className="w-100 rounded" onClick={() => increaseCartQuantity(id)}>
                + Add To Cart
@@ -112,14 +112,14 @@ const  Productdetails =async(id)=>{
                </Button>
              </div>
            )}
-         </div>
+         </div> */}
   </div>
             <div className="flex">
-              <span className="title-font font-medium text-2xl text-gray-900">${id.attributes.price}</span>
+              <span className="title-font font-medium text-2xl text-gray-900">${attributes.price}</span>
               <div className="flex mx-2">
               {/* <button  className="flex ml-auto text-white bg-indigo-500 border-0 py-2 mx-2 px-2 focus:outline-none hover:bg-indigo-600 rounded">Add to Cart</button> */}
               {/* <button onClick={()=>{addToCart(slug, 1, attributes.price)}}  className="flex ml-auto text-white bg-indigo-500 border-0 py-2 mx-2 px-2 focus:outline-none hover:bg-indigo-600 rounded">Add to Cart</button> */}
-              <button onClick={()=>{router.push('/checkout')}}  className="flex ml-auto text-white bg-indigo-500 border-0 py-2 mx-2 px-2 focus:outline-none hover:bg-indigo-600 rounded">Checkout</button>
+              {/* <button onClick={()=>{router.push('/checkout')}}  className="flex ml-auto text-white bg-indigo-500 border-0 py-2 mx-2 px-2 focus:outline-none hover:bg-indigo-600 rounded">Checkout</button> */}
               </div>
               <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
                 <svg fill="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
