@@ -1,19 +1,26 @@
-
+'use client'
 import { CldImage } from 'next-cloudinary';
 import { Button, Card } from "react-bootstrap"
 import increaseCartQuantity from './data'
-
-
-const  Productdetails =async({attributes})=>{
+import { useCart } from '../../components/ShoppingCart/CartContext';
+import { useEffect, useCallback } from 'react';
+const  Productdetails =({attributes})=>{
   
-  const quantity = 0
 
-  
+  const { addToCart } = useCart();
+
+ useEffect(() => { console.log('Productdetails component mounted');
+   return () => { console.log('Productdetails component unmounted'); };
+   }, []); 
+   const handleAddToCart = useCallback(() => {
+     console.log('Add to Cart button clicked:', attributes);
+      addToCart(attributes); },
+       [attributes, addToCart]);
 
   return (<>
     <div className="lg:w-4/5 mx-auto flex flex-wrap">
           <div className="flex justify-center items-center w-full lg:w-auto">
-          <CldImage className="rounded m-auto mb-8" alt="imagew"  src={attributes.image.data.attributes.url} width={500} height={400}/>
+          <CldImage className="rounded m-auto mb-8" alt="image"  src={attributes.image.data.attributes.url} width={500} height={400}/>
           </div>
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
             <h2 className="text-sm title-font text-gray-500 tracking-widest">MyShop</h2>
@@ -83,42 +90,13 @@ const  Productdetails =async({attributes})=>{
         
 
 <div className="d-flex flex-column">
-           {/* <div className="mt-auto">
-           {quantity === 0 ? (
-             <Button className="w-100 rounded" onClick={() => increaseCartQuantity(id)}>
-               + Add To Cart
-             </Button>
-           ) : (
-             <div
-               className="d-flex align-items-center flex-column"
-               style={{ gap: ".5rem" }}
-             >
-               <div
-                 className="d-flex align-items-center justify-content-center"
-                 style={{ gap: ".5rem" }}
-               >
-                 <Button onClick={() =>removeFromCart(id)}>-</Button>
-                 <div>
-                   <span className="fs-3">{quantity}</span> in cart
-                 </div>
-                 <Button onClick={() => increaseCartQuantity(id)}>+</Button>
-               </div>
-               <Button
-                 onClick={() => removeFromCart(id)}
-                 variant="danger"
-                 size="sm"
-               >
-                 Remove
-               </Button>
-             </div>
-           )}
-         </div> */}
+          
   </div>
             <div className="flex">
               <span className="title-font font-medium text-2xl text-gray-900">${attributes.price}</span>
               <div className="flex mx-2">
               {/* <button  className="flex ml-auto text-white bg-indigo-500 border-0 py-2 mx-2 px-2 focus:outline-none hover:bg-indigo-600 rounded">Add to Cart</button> */}
-              {/* <button onClick={()=>{addToCart(slug, 1, attributes.price)}}  className="flex ml-auto text-white bg-indigo-500 border-0 py-2 mx-2 px-2 focus:outline-none hover:bg-indigo-600 rounded">Add to Cart</button> */}
+              <button onClick={handleAddToCart}  className="flex ml-auto text-white bg-indigo-500 border-0 py-2 mx-2 px-2 focus:outline-none hover:bg-indigo-600 rounded">Add to Cart</button>
               {/* <button onClick={()=>{router.push('/checkout')}}  className="flex ml-auto text-white bg-indigo-500 border-0 py-2 mx-2 px-2 focus:outline-none hover:bg-indigo-600 rounded">Checkout</button> */}
               </div>
               <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
