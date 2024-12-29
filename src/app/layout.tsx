@@ -6,6 +6,7 @@ import './globals.css'
 import { Suspense } from 'react';
 import Footer from '@/components/footer';
 import Header from '@/components/header';
+import { CartProvider } from '../components/ShoppingCart/CartContext';
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -24,15 +25,16 @@ const RootLayout=({children}: {
         
       <body className={inter.className}>
       
-        
-      <Header/>
+        <CartProvider>
 
-            <Suspense>
-            {children}
-            <BootstrapClient/>
-            </Suspense>
-            
-            <Footer />
+              <Header/>
+                <Suspense>
+                      {children}
+                  <BootstrapClient/>
+                </Suspense>
+              <Footer />
+
+        </CartProvider>
         </body>
     </html>
   );
