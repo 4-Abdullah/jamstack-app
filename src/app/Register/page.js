@@ -141,7 +141,7 @@ return(
           <div className="absolute bottom-0 left-0 right-0 px-4 py-2 bg-gray-800 opacity-70">
               <h3 className="text-xl text-white  font-bold">Welcome! To E-Shop with Jamstack. </h3>
               <p className="mt-2 text-sm text-gray-300">This is the Register Page.</p>
-              <p className="absolute text-l text-black bottom-8 right-2 -translate-x-1/2 -translate-y-1/2 font-italic" >Back to E-Shop</p>
+              <Link href="/"><p className="absolute text-l text-black bottom-8 right-2 -translate-x-1/2 -translate-y-1/2 font-italic" >Back to E-Shop</p></Link>
               <Link href="/Login"><button type='submit' className="absolute shrink-0 w-32 bottom-0 -right-1 -translate-x-1/2 -translate-y-1 bg-indigo-600 hover:bg-indigo-700 text-slate-800 font-bold py-2 px-4 rounded-full">
                Login
               </button>
