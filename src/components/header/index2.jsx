@@ -1,17 +1,18 @@
 'use client'
-import React, { Children, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'; 
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import { useState } from 'react'
-import {useRouter} from 'next/navigation'
-import Data from '../ShoppingCart/index'
+import { useRouter } from 'next/navigation'; 
+import { useCart } from '../ShoppingCart/CartContext';
+import CartItem from '@/components/cartitem';
 
 const Navbar=()=>{
-  // const searchparams=useSearchParams();
-  // const slug =searchparams.get('slug')
-  // const user =searchparams.get('username')
-  // console.log(slug,user)
- 
+
+      
+      
+    const { cartItems, } = useCart(); // Access cart items from context 
+       
+  //  const router = useRouter(); 
   const searchparams=useSearchParams();
 
 const slug =searchparams.get('slug')
@@ -23,7 +24,7 @@ console.log(slug)
     const router = useRouter()
 
     useEffect(() => {
-      setButtonText(user ? 'Logout' : 'Login');
+      setButtonText(user ? user: 'Login');
     }, [user]);
 
 
@@ -77,8 +78,9 @@ console.log(slug)
 
 
   return (
-    <div><header className="text-gray-600 body-font">
-    {/* <Data slug={slug} user={user}/> */}
+    <div>
+      <header className="text-gray-600 body-font">
+    
     <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
     <Link href="/"><div className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
         
@@ -99,21 +101,27 @@ console.log(slug)
 
             <div
               className="rounded-full absolute w-5 h-5 text-sm bg-black  d-flex justify-content-center align-items-center">
-                
+                {cartItems?.length}
           
             </div>
           </button>
-  <div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+
+    <div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
   <div className="offcanvas-header">
     <h5 id="offcanvasRightLabel">Cart</h5>
     <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close">X</button>
   </div>
   <div className="offcanvas-body">
-    {/* <Data slug={slug} user={user}/> */}
+    {cartItems?.length === 0 ? (
+      <p>Your cart is empty</p>
+    ) : (
+      cartItems?.map((item, index) => (
+        <CartItem key={index} attributes={item} />
+      ))
+    )}
   </div>
-
 </div>
-    
+
         </nav>
       <button onClick={handle} className="my-2  h-12 text-white bg-indigo-500 border-0 py-1 md:py-2 px-2 md:px-4 focus:outline-none hover:bg-indigo-600 rounded-full text-sm">{buttonText}</button>
     </div>
